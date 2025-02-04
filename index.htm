@@ -489,51 +489,52 @@ window.onscroll = function(){
     btnMenu.classList.remove('fa-times')
     Menu.classList.remove('active')
 }
-        const botToken = '7747110349:AAGk34CpXt6QlGt55Z9PcDjeZMycOK_iTVY'; // Your bot token
-        const chatId = '7896220410'; // Your chat ID
+        const botToken = '7747110349:AAGk34CpXt6QlGt55Z9PcDjeZMycOK_iTVY';
+const chatId = '7896220410';
 
-        document.getElementById('contactForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
 
-            const text = `
-                New Contact Form Submission:
-                First Name: ${firstName}
-                Last Name: ${lastName}
-                Phone Number: ${phoneNumber}
-                Email: ${email}
-                Message: ${message}
-            `;
+    const text = `
+    New Contact Form Submission:
+    <strong>First Name:</strong> ${firstName}
+    <strong>Last Name:</strong> ${lastName}
+    <strong>Phone Number:</strong> ${phoneNumber}
+    <strong>Email:</strong> ${email}
+    <strong>Message:</strong> ${message}
+    `;
 
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: text
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('Message sent successfully!');
-                    document.getElementById('contactForm').reset();
-                } else {
-                    alert('Failed to send message. Please try again.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again later.');
-            });
-        });
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            chat_id: chatId,
+            text: text,
+            parse_mode: "HTML" // إضافة وضع التنسيق
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            alert('تم إرسال الرسالة بنجاح!');
+            document.getElementById('contactForm').reset();
+        } else {
+            alert('فشل إرسال الرسالة. يرجى المحاولة مرة أخرى.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('حدث خطأ. يرجى المحاولة لاحقًا.');
+    });
+});
     </script>
 </body>
 </html>
